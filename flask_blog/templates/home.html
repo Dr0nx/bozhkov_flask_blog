@@ -3,11 +3,10 @@
 {% block menu %}{% include "inc-menu.html" %}{% endblock %}
 {% block content %}
     <div class="container">
-        <div class="heading">
-            <h2>Добрый день!&#128587;</h2>
-        </div>
-        <br>
-        <div class="content-body red">
+        <div class="content-body">
+            <div class="top">
+                <h2>Добрый день!&#128587;</h2>
+            </div>
             <p class="card-text" id="para">Добро пожаловать в мой блог!
                 Большое спасибо за посещение. Я рад видеть вас на просторах моего блога! Это так здорово видеть
                 вас здесь. Позвольте мне сказать вам одну вещь: вы можете не только просматривать
@@ -33,3 +32,4 @@
         </div>
     </div>
 {% endblock content %}
+{% block bottom %}{% include "inc-bottom.html" %}{% endblock %}
