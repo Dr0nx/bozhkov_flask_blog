@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block style %}{% include "inc-style.html" %}{% endblock style %}
+{% block menu %}{% include "inc-menu.html" %}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="content-body">
+            <div class="top">
+                <h2>{{ legend }}</h2>
+            </div>
+            <div class="row g-3">
+                <div class="col col-lg-2 text-center">
+
+                    <img class="rounded-circle article-img"
+                         src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+                    <a class="link-secondary"
+                       href="{{ url_for('users.user_posts', username=post.author.username) }}"
+                       id="author">{{ post.author.username }}</a>
+                </div>
+                <div class="col">
+                    {% include "inc-flashed-messages.html" %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a class="title link-secondary"
+                                   href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a>
+                            </h4>
+                            <small>Опубликовано {{ post.date_posted.strftime('%A, %d %B %Y %I:%M %p') }}</small>
+                            <br>
+                            <br>
+                            <p class="card-text">{{ post.content }}</p>
+                        </div>
+                        {% if post.author == current_user %}
+                            <div class="card-footer text-center"> {% if post.author == current_user %}
+                                <a class="btn btn btn-outline-secondary"
+                                   href="{{ url_for('posts.update_post', post_id=post.id) }}">Обновить</a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal">
+                                    Удалить
+                                </button>
+                            {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Удалить пост?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Удалить">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block bottom %}{% include "inc-bottom.html" %}{% endblock %}
