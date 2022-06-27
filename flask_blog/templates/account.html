@@ -7,6 +7,7 @@
             <div class="top">
                 <h2>Аккаунт</h2>
             </div>
+            {% include "inc-flashed-messages.html" %}
             <div class="row g-3 justify-content-md-left">
                 <div class="col col-lg-2">
                     <img src="{{ image_file }}" class="rounded-circle" alt="Avatar Image">
@@ -57,9 +58,7 @@
                     {{ form.submit(class="btn btn-outline-secondary") }}
                 </div>
             </form>
-
         </div>
-
     </div>
 {% endblock content %}
 {% block bottom %}{% include "inc-bottom.html" %}{% endblock %}
