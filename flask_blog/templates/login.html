@@ -7,6 +7,7 @@
             <div class="top">
                 <h2>Авторизация</h2>
             </div>
+            {% include "inc-flashed-messages.html" %}
             <form class="row g-3" method="POST" action="">
                 {{ form.hidden_tag() }}
                 <div class="form-group col-md-6">
@@ -42,8 +43,13 @@
                 <div class="form-group col-12 btn-lg">
                     {{ form.submit(class="btn btn-outline-secondary") }}
                 </div>
-                <small>
-                    Нужен аккаунт? <a class="ml-2" href="{{ url_for('users.register') }}">Зарегистрируйтесь</a>
+                <small class="d-flex justify-content-between">
+                    <div>
+                        <a class="text-secondary" href="{{ url_for('users.reset_request') }}">Забыли пароль?</a>
+                    </div>
+                    <div>
+                        Нужен аккаунт? <a class="text-secondary" href="{{ url_for('users.register') }}">Зарегистрируйтесь</a>
+                    </div>
                 </small>
             </form>
         </div>
