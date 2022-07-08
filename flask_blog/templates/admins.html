@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block style %}{% include "inc-style.html" %}{% endblock style %}
+{% block menu %}{% include "inc-menu.html" %}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="content-body">
+            <div class="top">
+                <h2>&#128587;</h2>
+            </div>
+            {% include "inc-flashed-messages.html" %}
+        </div>
+    </div>
+{% endblock content %}
+{% block bottom %}{% include "inc-bottom.html" %}{% endblock %}
