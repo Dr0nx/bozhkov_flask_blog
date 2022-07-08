@@ -1,6 +1,16 @@
-from flask_blog import create_app
+from flask import redirect, url_for
+
+from flask_blog import create_app, db
 
 app = create_app()
 
+
+@app.route('/')
+def main():
+    return redirect(url_for('admin.admin_main'))
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    with app.app_context():
+        db.create_all()
+        app.run(debug=True, port=5000)
