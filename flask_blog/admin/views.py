@@ -17,7 +17,9 @@ class UserView(ModelView):
         'email': 'Почта',
         'password': 'Пароль',
         'role': 'Роль',
-        'file': 'Выберите изображение'
+        'file': 'Выберите изображение',
+        'tags': 'Теги',
+        'user_status': 'Статут пользователя',
     }
     column_list = ['id', 'role', 'username', 'email', 'password', 'last_seen', 'image_file']
     column_default_sort = ('username', True)
@@ -42,7 +44,7 @@ class UserView(ModelView):
     form_choices = {
         'role': AVAILABLE_USER_TYPES,
     }
-    column_descriptions = dict(username='Имя и, возможно, фамилия')
+    # column_descriptions = dict(username='Имя и, возможно, фамилия')
     column_exclude_list = ['password']
     column_searchable_list = ['email', 'username']
     column_filters = ['email', 'username']
@@ -67,12 +69,13 @@ class PostView(ModelView):
         'category': 'Категория',
         'slug': 'Слаг',
         'text': 'Текст',
-        'date': 'Дата',
+        'date_posted': 'Дата новой записи',
         'user': 'Пользователь',
         'username': 'Имя',
         'tag': 'Тег',
         'tags': 'Теги',
         'name': 'Имя',
+        'comments': 'Комментарий',
     }
 
     can_create = True
@@ -104,7 +107,11 @@ class PostView(ModelView):
 
 class CommentView(ModelView):
     column_labels = {
-        'name': 'Имя комментария'
+        'id': 'ID',
+        'username': 'Пользователь',
+        'body': 'Содержимое',
+        'date_posted': 'Дата новой записи',
+        'article': 'Выбор комментария',
     }
     can_delete = True
     can_create = True
@@ -113,9 +120,13 @@ class CommentView(ModelView):
 
 class TagView(ModelView):
     column_labels = {
-        'name': 'Имя тега',
-        'tag_post': 'Посты тега',
+        'username': 'Имя пользователя',
+        'name': 'Имя',
+        'user_id': 'ID пользователя',
+        'post_id': 'ID комментария',
     }
+    column_list = ['username', 'name', 'user_id', 'post_id']
+
     can_delete = True
     can_create = True
     can_edit = True
