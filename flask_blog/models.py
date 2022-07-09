@@ -43,11 +43,6 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
 
-# class AdminUser(db.Model, UserMixin):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(20))
-
-
 class Post(db.Model):
     __tablename__ = 'posts'
 
