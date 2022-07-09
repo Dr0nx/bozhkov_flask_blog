@@ -33,17 +33,16 @@ def create_app(config_class=Config):
     from flask_blog.admin.views import UserView, PostView, CommentView, TagView, MyAdminModelView
     from flask_blog.models import User, Post, Comment, Tag
 
-
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(errors)
 
     admin = Admin(app, 'Блог Андрея', index_view=MyAdminMainView(), template_mode='bootstrap4', url='/')
-    admin.add_view(UserView(User, db.session, name='Пользователь'))
+    # admin.add_view(UserView(User, db.session, name='Пользователь'))
+    admin.add_view(MyAdminModelView(User, db.session, name='Пользователь'))
     admin.add_view(PostView(Post, db.session, name='Статьи'))
     admin.add_view(CommentView(Comment, db.session, name='Комментарии'))
     admin.add_view(TagView(Tag, db.session, name='Теги'))
-    # admin.add_view(MyAdminModelView(User, db.session, name='Админка'))
 
     return app
