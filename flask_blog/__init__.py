@@ -39,8 +39,7 @@ def create_app(config_class=Config):
     app.register_blueprint(errors)
 
     admin = Admin(app, 'Блог Андрея', index_view=MyAdminMainView(), template_mode='bootstrap4', url='/')
-    # admin.add_view(UserView(User, db.session, name='Пользователь'))
-    admin.add_view(MyAdminModelView(User, db.session, name='Пользователь'))
+    admin.add_view(UserView(User, db.session, name='Пользователь'))
     admin.add_view(PostView(Post, db.session, name='Статьи'))
     admin.add_view(CommentView(Comment, db.session, name='Комментарии'))
     admin.add_view(TagView(Tag, db.session, name='Теги'))
