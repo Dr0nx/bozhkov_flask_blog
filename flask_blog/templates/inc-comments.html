@@ -1,0 +1,58 @@
+<div class="row mt-5">
+    <form method="POST" action="{{ url_for('posts.post', post_id=post_id) }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group col-md-12">
+            {{ form.body.label(class="form-control-label") }}
+            {% if form.body.errors %}
+                {{ form.body(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.body.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center">
+                    {{ form.body(class="form-control form-control-lg") }}
+                    <input class="btn btn-outline-secondary" id="submit" name="submit" type="submit"
+                           value="Опубликовать">
+                </div>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% for i in comment %}
+    <div class="card mt-4 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <a class="link-secondary" href="{{ url_for('users.user_posts', username=i.username) }}">{{ i.username }}</a>
+                {{ i.date_posted.strftime('%d.%m.%Y-%H.%M') }}
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    {{ i.body }}
+                </div>
+            </div>
+            {#            <div class="row d-flex justify-content-between">#}
+            {#                <div class="col-6">#}
+            {#                    <div class="left_stat_side">&#128065; {{ i.views }}</div>#}
+            {#                </div>#}
+            {#                <div class="col-auto">#}
+            {#                    <div class="right_stat_side">&#10084; {{ i.likes }}</div>#}
+            {#                </div>#}
+            {#            </div>#}
+            <div class="row mt-3">
+                {% if post.author == current_user or current_user.username == i.username or current_user.is_admin %}
+                    <div class="d-flex justify-content-between">
+                    <a class="link-secondary" href="{{ url_for( 'posts.update_comment', comment_id=i.id) }}"><p>Обновить
+                        комментарий</p>
+                    </a>
+                    <a class="link-secondary" href="{{ url_for( 'posts.delete_comment', comment_id=i.id) }}"><p>Удалить комментарий</p>
+                    </a>
+                {% else %}
+                {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endfor %}

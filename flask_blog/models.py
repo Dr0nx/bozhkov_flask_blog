@@ -49,10 +49,14 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), unique=False, nullable=False)
     content = db.Column(db.Text(60), nullable=False)
+    image_post = db.Column(db.String(30), nullable=False, default='default.jpg')
+    views = db.Column(db.Integer, default=0)
+    likes = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
-    comments = db.relationship('Comment', backref='article', lazy=True, cascade="all, delete-orphan")
+    comments = db.relationship('Comment', backref='comment_post', lazy=True, cascade="all, delete-orphan")
     tags = db.relationship('Tag', backref='post_tag', lazy=True, cascade="all, delete-orphan")
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    post_id = db.Column(db.String(), unique=True, index=True)
 
 
 class Comment(db.Model):
