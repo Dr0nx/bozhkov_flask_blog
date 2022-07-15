@@ -1,3 +1,5 @@
+import locale
+
 from flask import Flask
 from flask_admin import Admin
 from flask_babel import Babel
@@ -17,6 +19,7 @@ babel = Babel()
 
 
 def create_app(config_class=Config):
+    locale.resetlocale()
     app = Flask(__name__)
     app.config.from_object(Config)
 
