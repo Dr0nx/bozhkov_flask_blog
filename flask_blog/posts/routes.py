@@ -33,18 +33,18 @@ def new_post():
 @login_required
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    comment = Comment.query.filter_by(post_id=post_id).order_by(db.desc(Comment.date_posted)).all()
+    comment = Comment.query.filter_by(post_id=post.id).order_by(db.desc(Comment.date_posted)).all()
     post.views += 1
     db.session.commit()
     form = CommentForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            username = current_user.username
-            comment = Comment(username=username, body=form.body.data, post_id=post_id)
-            db.session.add(comment)
-            db.session.commit()
-            flash('Комментарий к посту был добавлен', 'success')
-            return redirect(url_for('posts.post', post_id=post.id))
+    if request.method == 'POST' and form.validate_on_submit():
+        username = current_user.username
+        comment = Comment(username=username, body=form.body.data, post_id=post_id)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Комментарий к посту был добавлен', 'success')
+        return redirect(url_for('posts.post', post_id=post.id))
+
     # image_file = url_for('static', filename=f'profile_pics/' + 'users/' + post.author.username + '/post_images/') + \
     #             post.image_post)
     # return render_template('post.html', title=post.title, post=post, image_file=image_file, post_id=post_id,
@@ -88,13 +88,16 @@ def delete_post(post_id):
 def update_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     form = CommentUpdateForm()
-    if request.method == 'GET':
-        form.body.data = comment.body
-    if form.validate_on_submit():
-        comment.body = form.body.data
-        db.session.commit()
-        return redirect(url_for('posts.post', post_id=comment.post_id))
-    return render_template('update_comment.html', form=form)
+    if current_user.is_admin or comment.username == current_user.username:
+        if request.method == 'GET':
+            form.body.data = comment.body
+        if request.method == 'POST' and form.validate_on_submit():
+            comment.body = form.body.data
+            db.session.commit()
+            return redirect(url_for('posts.post', post_id=comment.post_id))
+    else:
+        abort(403)
+    return render_template('update_comment.html', form=form, title="Обновление комментария")
 
 
 @posts.route('/comment/<int:comment_id>/delete/', methods=['GET', 'POST'])
