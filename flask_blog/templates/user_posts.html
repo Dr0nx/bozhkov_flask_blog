@@ -23,7 +23,7 @@
                                     <a class="title link-secondary"
                                        href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a>
                                 </h4>
-                                <small>Опубликовано {{ post.date_posted.strftime('%A, %d %B %Y %I:%M %p') }}</small>
+                                <small>Опубликовано {{ post.date_posted.strftime('%A, %d %B %Y %H:%M') }}</small>
                                 <br>
                                 <br>
                                 <p class="card-text">{{ post.content }}</p>
