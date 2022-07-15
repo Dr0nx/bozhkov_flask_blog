@@ -24,7 +24,8 @@
     <div class="card mt-4 mb-4">
         <div class="card-body">
             <div class="d-flex justify-content-between">
-                <a class="link-secondary" href="{{ url_for('users.user_posts', username=i.username) }}">{{ i.username }}</a>
+                <a class="link-secondary"
+                   href="{{ url_for('users.user_posts', username=i.username) }}">{{ i.username }}</a>
                 {{ i.date_posted.strftime('%d.%m.%Y-%H.%M') }}
             </div>
             <div class="row mt-3">
@@ -41,18 +42,21 @@
             {#                </div>#}
             {#            </div>#}
             <div class="row mt-3">
-                {% if post.author == current_user or current_user.username == i.username or current_user.is_admin %}
+                {#                {% if post.author == current_user or current_user.username == i.username or current_user.is_admin %}#}
+                {% if comment.username == current_user.username or current_user.username == i.username or current_user.is_admin %}
                     <div class="d-flex justify-content-between">
                     <a class="link-secondary" href="{{ url_for( 'posts.update_comment', comment_id=i.id) }}"><p>Обновить
                         комментарий</p>
                     </a>
-                    <a class="link-secondary" href="{{ url_for( 'posts.delete_comment', comment_id=i.id) }}"><p>Удалить комментарий</p>
+                    <a class="link-secondary" href="{{ url_for( 'posts.delete_comment', comment_id=i.id) }}"><p>Удалить
+                        комментарий</p>
                     </a>
                 {% else %}
+                    <div>
                 {% endif %}
                 </div>
-            </div>
+                </div>
 
+            </div>
         </div>
-    </div>
 {% endfor %}
