@@ -27,8 +27,8 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy=True)
     is_admin = db.Column(db.Boolean, nullable=True, default=False)
 
-    # def __repr__(self):
-    #     return f'Пользователь("{self.username}", "{self.email}", "{self.image_file}")'
+    def __repr__(self):
+        return f'Пользователь("{self.username}", "{self.email}", "{self.image_file}")'
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -50,7 +50,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), unique=False, nullable=False)
     content = db.Column(db.Text(60), nullable=False)
-    image_post = db.Column(db.String(30), nullable=False, default='default.jpg')
+    image_post = db.Column(db.String(30), nullable=True, default='')
     views = db.Column(db.Integer, default=0)
     likes = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
@@ -58,6 +58,9 @@ class Post(db.Model):
     comments = db.relationship('Comment', backref='comment_post', lazy=True, cascade="all, delete-orphan")
     tags = db.relationship('Tag', backref='post_tag', lazy=True, cascade="all, delete-orphan")
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
+
+    def __repr__(self):
+        return f'Пост("{self.image_post}", "{self.content}")'
 
 
 class Comment(db.Model):
@@ -69,6 +72,9 @@ class Comment(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id', ondelete='CASCADE'), nullable=False)
 
+    def __repr__(self):
+        return f'Комментарий("{self.username}", "{self.body}")'
+
 
 class Tag(db.Model):
     __tablename__ = "tags"
@@ -78,3 +84,6 @@ class Tag(db.Model):
     name = db.Column(db.Text(200), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=True)
+
+    def __repr__(self):
+        return f'Тег("{self.username}", "{self.name}")'

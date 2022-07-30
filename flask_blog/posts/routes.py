@@ -4,12 +4,14 @@ from flask_login import current_user, login_required
 from flask_blog import db
 from flask_blog.models import Post, Comment
 from flask_blog.posts.forms import PostForm, CommentForm, CommentUpdateForm
+from flask_blog.posts.utils import save_picture_post
 
 posts = Blueprint('posts', __name__)
 
 
+@posts.route('/')
 @posts.route('/allpost')
-@login_required
+# @login_required
 def allpost():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
@@ -21,12 +23,29 @@ def allpost():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        if form.picture.data.filename:
+            post = Post(title=form.title.data, content=form.content.data,
+                        image_post=form.picture.data, author=current_user)
+
+            picture_file = save_picture_post(form.picture.data)
+            post.image_post = picture_file
+
+        else:
+            post = Post(title=form.title.data, content=form.content.data,
+                        author=current_user)
+
         db.session.add(post)
         db.session.commit()
         flash('Ваш пост создан!', 'success')
         return redirect(url_for('posts.allpost'))
-    return render_template('create_post.html', title='Новый пост', form=form, legend='Новый пост')
+
+    image_file = url_for('static', filename=f'images/' + current_user.username + current_user.image_file)
+
+    return render_template('create_post.html',
+                           title='Новый пост',
+                           form=form,
+                           legend='Новый пост',
+                           image_file=image_file)
 
 
 @posts.route('/post/<int:post_id>', methods=['GET', 'POST'])
@@ -45,10 +64,6 @@ def post(post_id):
         flash('Комментарий к посту был добавлен', 'success')
         return redirect(url_for('posts.post', post_id=post.id))
 
-    # image_file = url_for('static', filename=f'profile_pics/' + 'users/' + post.author.username + '/post_images/') + \
-    #             post.image_post)
-    # return render_template('post.html', title=post.title, post=post, image_file=image_file, post_id=post_id,
-    #                        form=form, comment=comment)
     return render_template('post.html', title=post.title, post=post, post_id=post_id, form=form, comment=comment)
 
 
@@ -56,18 +71,28 @@ def post(post_id):
 @login_required
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)
+
     if post.author != current_user:
         abort(403)
     form = PostForm()
+
     if form.validate_on_submit():
+        if form.picture.data.filename:
+            picture_file = save_picture_post(form.picture.data)
+            post.image_post = picture_file
+        else:
+            post = Post(title=form.title.data, content=form.content.data, author=current_user)
+
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()
         flash('Ваш пост обновлен!', 'success')
         return redirect(url_for('posts.post', post_id=post.id))
+
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
+
     return render_template('create_post.html', title='Обновление поста', form=form, legend='Обновление поста')
 
 
@@ -77,6 +102,7 @@ def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
         abort(403)
+    # !!! ?
     db.session.delete(post)
     db.session.commit()
     flash('Ваш пост был удален!', 'success')

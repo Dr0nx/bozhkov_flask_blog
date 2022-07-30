@@ -1,17 +1,9 @@
 {% extends "layout.html" %}
-{% block style %}{% include "inc-style.html" %}{% endblock style %}
 {% block menu %}{% include "inc-menu.html" %}{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="content-body">
-            <br>
-            <div class="top">
-                <h1>Доступ к станице запрещен (ошибка 403)</h1>
-            </div>
-            <div class="top">
-                <h1>&#128544;</h1>
-            </div>
-        </div>
-    </div>
+    <main class="d-flex align-items-center flex-column mb-3">
+        <h1>Доступ к станице запрещен (ошибка 403)</h1>
+        <h1>&#128544;</h1>
+    </main>
 {% endblock content %}
 {% block bottom %}{% include "inc-bottom.html" %}{% endblock %}

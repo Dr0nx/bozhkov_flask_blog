@@ -1,15 +1,12 @@
 {% extends "layout.html" %}
-{% block style %}{% include "inc-style.html" %}{% endblock style %}
 {% block menu %}{% include "inc-menu.html" %}{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="content-body">
-            <div class="top">
-                <h2>Регистрация</h2>
-            </div>
-            <form class="row g-3" method="POST" action="">
-                {{ form.hidden_tag() }}
-                <div class="form-group col-md-6">
+    <main class="mb-5">
+        <h2 class="d-flex justify-content-center mb-4">Регистрация</h2>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="row justify-content-center">
+                <div class="form-group col-md-4">
                     {{ form.username.label(class="form-control-label") }}
                     {% if form.username.errors %}
                         {{ form.username(class="form-control form-control-lg is-invalid") }}
@@ -22,7 +19,7 @@
                         {{ form.username(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}
                         {{ form.email(class="form-control form-control-lg is-invalid") }}
@@ -35,7 +32,9 @@
                         {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group col-md-6">
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-md-4">
                     {{ form.password.label(class="form-control-label") }}
                     {% if form.password.errors %}
                         {{ form.password(class="form-control form-control-lg is-invalid") }}
@@ -48,7 +47,7 @@
                         {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     {{ form.confirm_password.label(class="form-control-label") }}
                     {% if form.confirm_password.errors %}
                         {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
@@ -61,11 +60,13 @@
                         {{ form.confirm_password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group col-12 btn-lg">
+            </div>
+            <div class="row mt-4">
+                <div class="form-group col-12 btn-lg text-center">
                     {{ form.submit(class="btn btn-outline-secondary") }}
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
+        </form>
+    </main>
 {% endblock content %}
 {% block bottom %}{% include "inc-bottom.html" %}{% endblock %}

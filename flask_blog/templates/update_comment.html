@@ -1,32 +1,30 @@
 {% extends "layout.html" %}
-{% block style %}{% include "inc-style.html" %}{% endblock style %}
 {% block menu %}{% include "inc-menu.html" %}{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="content-body">
-            <div class="top">
-                <h2></h2>
-            </div>
-            {% include "inc-flashed-messages.html" %}
-            <form method="POST" enctype="multipart/form-data">
-                {{ form.hidden_tag() }}
-                <div class="form-group col-md-12">
-                    {{ form.body.label(class="form-control-label") }}
-                    {% if form.body.errors %}
-                        {{ form.body(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.body.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.body(class="form-control form-control-lg") }}
+    <main class="mb-5">
+        <h2 class="d-flex justify-content-center">{{ legend }}</h2>
+        {% include "inc-flashed-messages.html" %}
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group col-md-12">
+                {{ form.body.label(class="form-control-label") }}
+                {% if form.body.errors %}
+                    {{ form.body(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.body.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center">
+                        {{ form.body(class="form-control form-control-lg mb-3") }}
                         <input class="btn btn-outline-secondary" id="submit" name="submit" type="submit"
                                value="Опубликовать">
-                    {% endif %}
-                </div>
-            </form>
-        </div>
-    </div>
+                    </div>
+                {% endif %}
+            </div>
+        </form>
+    </main>
+
 {% endblock content %}
 {% block bottom %}{% include "inc-bottom.html" %}{% endblock %}

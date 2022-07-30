@@ -1,58 +1,61 @@
 {% extends "layout.html" %}
-{% block style %}{% include "inc-style.html" %}{% endblock style %}
 {% block menu %}{% include "inc-menu.html" %}{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="content-body">
-            <div class="top">
-                <h2>Авторизация</h2>
-            </div>
-            {% include "inc-flashed-messages.html" %}
-            <form class="row g-3" method="POST" action="">
+    <main class="mb-5">
+        <h2 class="d-flex justify-content-center mb-4">Авторизация</h2>
+        {% include "inc-flashed-messages.html" %}
+        <div class="d-flex justify-content-center">
+            <form method="POST" action="">
                 {{ form.hidden_tag() }}
-                <div class="form-group col-md-6">
-                    {{ form.email.label(class="form-control-label") }}
-                    {% if form.email.errors %}
-                        {{ form.email(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.email.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.email(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group col-md-6">
-                    {{ form.password.label(class="form-control-label") }}
-                    {% if form.password.errors %}
-                        {{ form.password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.password(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-check">
-                    {{ form.remember(class="form-check-input") }}
-                    {{ form.remember.label(class="form-check-label") }}
-                </div>
-                <div class="form-group col-12 btn-lg">
-                    {{ form.submit(class="btn btn-outline-secondary") }}
-                </div>
-                <small class="d-flex justify-content-between">
-                    <div>
-                        <a class="text-secondary" href="{{ url_for('users.reset_request') }}">Забыли пароль?</a>
+                <div class="row">
+                    <div class="form-group col">
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-lg") }}
+                        {% endif %}
                     </div>
-                    <div>
-                        Нужен аккаунт? <a class="text-secondary" href="{{ url_for('users.register') }}">Зарегистрируйтесь</a>
+                    <div class="form-group col">
+                        {{ form.password.label(class="form-control-label") }}
+                        {% if form.password.errors %}
+                            {{ form.password(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.password(class="form-control form-control-lg") }}
+                        {% endif %}
                     </div>
-                </small>
+
+                    <div class="form-group mt-2">
+                        {{ form.remember(class="form-check-input") }}
+                        {{ form.remember.label(class="form-check-label") }}
+                    </div>
+                    <div class="form-group col-12 mt-2 mb-2 text-center">
+                        {{ form.submit(class="btn btn-outline-secondary") }}
+                    </div>
+                    <small class="d-flex justify-content-between">
+                        <div class="">
+                            <a class="text-secondary" href="{{ url_for('users.reset_request') }}">Забыли пароль?</a>
+
+                        </div>
+                        <div class="">
+                            Нужен аккаунт?
+                            <a class="text-secondary"
+                               href="{{ url_for('users.register') }}"> Зарегистрируйтесь</a>
+                        </div>
+                    </small>
+                </div>
             </form>
         </div>
-    </div>
+    </main>
 {% endblock content %}
 {% block bottom %}{% include "inc-bottom.html" %}{% endblock %}
