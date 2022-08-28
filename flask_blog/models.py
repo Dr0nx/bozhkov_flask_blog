@@ -26,6 +26,7 @@ class User(db.Model, UserMixin):
     tags = db.relationship('Tag', backref='user_tag', lazy=True, cascade="all, delete-orphan")
     posts = db.relationship('Post', backref='author', lazy=True)
     is_admin = db.Column(db.Boolean, nullable=True, default=False)
+    vk_access_token = db.Column(db.String(100))
 
     def __repr__(self):
         return f'Пользователь("{self.username}", "{self.email}", "{self.image_file}")'

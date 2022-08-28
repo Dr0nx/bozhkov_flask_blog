@@ -6,6 +6,7 @@ from flask_babel import Babel
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_oauthlib.client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 
 from flask_blog.config import Config
@@ -16,6 +17,7 @@ login_manager = LoginManager()
 bcrypt = Bcrypt()
 mail = Mail()
 babel = Babel()
+oauth = OAuth()
 
 
 def create_app(config_class=Config):
@@ -28,6 +30,7 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     mail.init_app(app)
     babel.init_app(app)
+    oauth.init_app(app)
 
     from flask_blog.main.routes import main
     from flask_blog.users.routes import users
@@ -46,5 +49,6 @@ def create_app(config_class=Config):
     admin.add_view(PostView(Post, db.session, name='Статьи'))
     admin.add_view(CommentView(Comment, db.session, name='Комментарии'))
     admin.add_view(TagView(Tag, db.session, name='Теги'))
+
 
     return app
