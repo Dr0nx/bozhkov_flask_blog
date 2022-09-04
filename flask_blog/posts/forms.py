@@ -2,18 +2,19 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, SubmitField, TextAreaField, FileField
 from wtforms.validators import DataRequired, InputRequired
+from flask_ckeditor import CKEditorField
 
 
 class PostForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
-    content = TextAreaField('Статья', validators=[DataRequired()])
+    content = CKEditorField('Статья', validators=[DataRequired()])
     picture = FileField('Изображение (png, jpg)', validators=[FileAllowed(['png', 'jpg'])])
     submit = SubmitField('Опубликовать')
 
 
 class PostUpdateForm(FlaskForm):
     title = StringField('Заголовок', validators=[DataRequired()])
-    content = TextAreaField('Статья', validators=[DataRequired()])
+    content = CKEditorField('Статья', validators=[DataRequired()])
     picture = FileField('Изображение (png, jpg)', validators=[FileAllowed(['png', 'jpg'])])
     submit = SubmitField('Опубликовать')
 

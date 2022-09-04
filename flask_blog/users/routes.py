@@ -19,7 +19,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
 
         # Временно отключить добавление новых пользователей
-        # db.session.add(user)
+        sdb.session.add(user)
 
         db.session.commit()
         flash('Ваша учетная запись была создана! Теперь вы можете войти в систему', 'success')

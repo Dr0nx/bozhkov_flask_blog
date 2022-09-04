@@ -7,7 +7,9 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_oauthlib.client import OAuth
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_ckeditor import CKEditor
 
 from flask_blog.config import Config
 from flask_blog.errors.handlers import errors
@@ -18,6 +20,8 @@ bcrypt = Bcrypt()
 mail = Mail()
 babel = Babel()
 oauth = OAuth()
+migrate = Migrate()
+ckeditor = CKEditor()
 
 
 def create_app(config_class=Config):
@@ -31,6 +35,8 @@ def create_app(config_class=Config):
     mail.init_app(app)
     babel.init_app(app)
     oauth.init_app(app)
+    migrate.init_app(app, db)
+    ckeditor.init_app(app)
 
     from flask_blog.main.routes import main
     from flask_blog.users.routes import users

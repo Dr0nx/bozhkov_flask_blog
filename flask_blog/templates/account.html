@@ -9,7 +9,7 @@
                 <img src="{{ image_file }}" class="rounded-circle" alt="Avatar Image">
             </div>
             <div class="col-md-auto">
-                <h4 class="text-secondary">Пользователь</h4>
+                <h4 class="text-primary">Пользователь</h4>
                 <h2>{{ current_user.username }}</h2>
                 <p>{{ current_user.email }}</p>
             </div>
@@ -52,7 +52,7 @@
                 {% endif %}
             </div>
             <div class="form-group col-12 btn-lg text-center">
-                {{ form.submit(class="btn btn-outline-secondary") }}
+                {{ form.submit(class="btn btn-outline-primary") }}
             </div>
         </form>
     </main>

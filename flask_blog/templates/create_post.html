@@ -35,9 +35,11 @@
                 {{ form.picture }}
             </div>
             <div class="form-group d-flex justify-content-center">
-                {{ form.submit(class="btn btn-outline-secondary my-3") }}
+                {{ form.submit(class="btn btn-outline-primary my-3") }}
             </div>
         </form>
+        {{ ckeditor.load() }}
+        {{ ckeditor.config(name='content') }}
     </main>
 {% endblock content %}
 {% block bottom %}{% include "inc-bottom.html" %}{% endblock %}
