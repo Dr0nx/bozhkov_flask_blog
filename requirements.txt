@@ -17,6 +17,7 @@ Flask-Login==0.6.1
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==1.0.1
+Flask-Migrate==3.1.0
 greenlet==1.1.2
 gunicorn==20.1.0
 idna==3.3
@@ -38,4 +39,3 @@ tablib==3.2.1
 Werkzeug==2.1.2
 WTForms==3.0.1
 zipp==3.8.0
-Flask-OAuthlib==0.9.6
