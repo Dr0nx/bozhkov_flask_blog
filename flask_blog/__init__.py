@@ -56,5 +56,4 @@ def create_app(config_class=Config):
     admin.add_view(CommentView(Comment, db.session, name='Комментарии'))
     admin.add_view(TagView(Tag, db.session, name='Теги'))
 
-
     return app

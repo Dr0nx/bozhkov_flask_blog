@@ -16,17 +16,13 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(20), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=False, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     last_seen = db.Column(db.DateTime)
-    user_status = db.Column(db.String(40), nullable=True)
     tags = db.relationship('Tag', backref='user_tag', lazy=True, cascade="all, delete-orphan")
     posts = db.relationship('Post', backref='author', lazy=True)
-    is_admin = db.Column(db.Boolean, nullable=True, default=False)
-    vk_access_token = db.Column(db.String(100))
 
     def __repr__(self):
         return f'Пользователь("{self.username}", "{self.email}", "{self.image_file}")'
@@ -52,8 +48,6 @@ class Post(db.Model):
     title = db.Column(db.String(200), unique=False, nullable=False)
     content = db.Column(db.Text(60), nullable=False)
     image_post = db.Column(db.String(30), nullable=True, default='')
-    views = db.Column(db.Integer, default=0)
-    likes = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     post_id = db.Column(db.String(), unique=True, index=True)
     comments = db.relationship('Comment', backref='comment_post', lazy=True, cascade="all, delete-orphan")
