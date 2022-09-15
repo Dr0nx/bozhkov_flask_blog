@@ -43,16 +43,26 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="d-flex justify-content-between mt-3">
-                    <div class="left_side_post">&#128065;{{ post.views }}</div>
-                    {#                        <div class="right_side_post">&#10084;{{ post.likes }}</div>#}
+                <div class="d-flex justify-content-between align-content-around mt-3">
+                    <div class="left_side_post"></div>
+                    <div class="right_side_post">
+                        {{ post.likes.count() }}
+                        {% if current_user.has_liked_post(post) %}
+                            <a href="{{ url_for('users.like_action', post_id=post.id, action='unlike') }}"><img
+                                    src="{{ url_for('static', filename='images/like-icon-liked-small.png') }}"
+                                    alt="heart" width="20px"></a>
+                        {% else %}
+                            <a href="{{ url_for('users.like_action', post_id=post.id, action='like') }}"><img
+                                    src="{{ url_for('static', filename='images/like-icon-unliked-small.png') }}"
+                                    alt="heart" width="20px"></a>
+                        {% endif %}
+                    </div>
                 </div>
 
                 {% include 'inc-comments.html' %}
 
             </div>
         </div>
-
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">

@@ -16,14 +16,16 @@ class UserView(ModelView):
         'posts': 'Посты',
         'email': 'Почта',
         'password': 'Пароль',
-        'role': 'Роль',
+        # 'role': 'Роль',
         'file': 'Выберите изображение',
         'tags': 'Теги',
         'user_status': 'Статут пользователя',
     }
-    column_list = ['id', 'role', 'username', 'email', 'password', 'last_seen', 'image_file']
+    # column_list = ['id', 'role', 'username', 'email', 'password', 'last_seen', 'image_file']
+    column_list = ['id', 'username', 'email', 'password', 'last_seen', 'image_file']
     column_default_sort = ('username', True)
-    column_sortable_list = ('id', 'role', 'username', 'email')
+    # column_sortable_list = ('id', 'role', 'username', 'email')
+    column_sortable_list = ('id', 'username', 'email')
     can_create = True
     can_edit = True
     can_delete = False
@@ -41,14 +43,15 @@ class UserView(ModelView):
         (u'Редактор', u'Редактор'),
         (u'Пользователь', u'Пользователь')
     ]
-    form_choices = {
-        'role': AVAILABLE_USER_TYPES,
-    }
+    # form_choices = {
+    #     'role': AVAILABLE_USER_TYPES,
+    # }
     # column_descriptions = dict(username='Имя и, возможно, фамилия')
     column_exclude_list = ['password']
     column_searchable_list = ['email', 'username']
     column_filters = ['email', 'username']
-    column_editable_list = ['role', 'username', 'email']
+    # column_editable_list = ['role', 'username', 'email']
+    column_editable_list = ['username', 'email']
     create_modal = True
     edit_modal = True
     form_excluded_columns = ['id']
@@ -137,4 +140,4 @@ class MyAdminModelView(ModelView):
         return current_user.is_authenticated
 
     def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('main.home'))
+        return redirect(url_for('posts.allpost'))

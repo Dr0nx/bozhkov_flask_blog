@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import login_user, current_user, logout_user, login_required, AnonymousUserMixin
 
 from flask_blog import db, bcrypt
 from flask_blog.models import User, Post
@@ -12,18 +12,16 @@ users = Blueprint('users', __name__)
 @users.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('posts.allpost'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-
         # Временно отключить добавление новых пользователей
-        sdb.session.add(user)
-
+        db.session.add(user)
         db.session.commit()
         flash('Ваша учетная запись была создана! Теперь вы можете войти в систему', 'success')
-        return redirect(url_for('main.home'))
+        return redirect(url_for('posts.allpost'))
     return render_template('register.html', title='Register', form=form)
 
 
@@ -109,3 +107,21 @@ def reset_token(token):
         flash('Ваш пароль был обновлен! Теперь вы можете авторизоваться', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Сброс пароля', form=form)
+
+
+@users.route('/like/<int:post_id>/<action>')
+@login_required
+def like_action(post_id, action):
+    post = Post.query.filter_by(id=post_id).first_or_404()
+    if action == 'like':
+        current_user.like_post(post)
+        db.session.commit()
+    if action == 'unlike':
+        current_user.unlike_post(post)
+        db.session.commit()
+    return redirect(request.referrer)
+
+
+class Anonymous(AnonymousUserMixin):
+    def __init__(self):
+        self.username = 'Guest'

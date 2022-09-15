@@ -29,9 +29,29 @@
                                 <hr class="mt-4">
                             {% endif %}
                             <p class="card-text mt-3">{{ post.content|safe|truncate(300) }}</p>
-                            <small class="card-text mt-3"><a class="title link-primary"
-                                                             href="{{ url_for('posts.post', post_id=post.id) }}">Читать
-                                далее...</a></small>
+
+                            <div class="d-flex justify-content-between align-content-around mt-3">
+                                <div class="left_side_post">
+                                    <small class="card-text mt-3"><a class="title link-primary"
+                                                                     href="{{ url_for('posts.post', post_id=post.id) }}">Читать
+                                        далее...</a></small>
+                                </div>
+                                <div class="right_side_post">
+                                    {% if current_user.is_authenticated %}
+                                        {{ post.likes.count() }}
+                                        {% if current_user.has_liked_post(post) %}
+                                            <a href="{{ url_for('users.like_action', post_id=post.id, action='unlike') }}"><img
+                                                    src="{{ url_for('static', filename='images/like-icon-liked-small.png') }}"
+                                                    alt="heart" width="20px"></a>
+                                        {% else %}
+                                            <a href="{{ url_for('users.like_action', post_id=post.id, action='like') }}"><img
+                                                    src="{{ url_for('static', filename='images/like-icon-unliked-small.png') }}"
+                                                    alt="heart" width="20px"></a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
