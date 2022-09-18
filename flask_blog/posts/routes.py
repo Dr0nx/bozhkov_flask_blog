@@ -53,7 +53,7 @@ def new_post():
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     comment = Comment.query.filter_by(post_id=post.id).order_by(db.desc(Comment.date_posted)).all()
-    db.session.commit()
+    # db.session.commit()
     form = CommentForm()
     if request.method == 'POST' and form.validate_on_submit():
         username = current_user.username
