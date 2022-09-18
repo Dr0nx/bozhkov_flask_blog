@@ -7,8 +7,3 @@ main = Blueprint('main', __name__)
 @main.route('/home')
 def home():
     return render_template('home.html')
-
-
-@main.route('/home')
-def upload_image():
-    return render_template('index.html')
