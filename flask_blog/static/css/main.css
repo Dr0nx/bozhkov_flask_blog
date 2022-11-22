@@ -5,3 +5,7 @@ body {
 p {
     font-size: 1.1em;
 }
+
+#dummy {
+    display: none;
+}
