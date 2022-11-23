@@ -79,8 +79,6 @@ def update_post(post_id):
         if form.picture.data.filename:
             picture_file = save_picture_post(form.picture.data)
             post.image_post = picture_file
-        else:
-            post = Post(title=form.title.data, content=form.content.data, author=current_user)
 
         post.title = form.title.data
         post.content = form.content.data
@@ -113,7 +111,8 @@ def delete_post(post_id):
 def update_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     form = CommentUpdateForm()
-    if current_user.is_admin or comment.username == current_user.username:
+    # if current_user.is_admin or comment.username == current_user.username:
+    if comment.username == current_user.username:
         if request.method == 'GET':
             form.body.data = comment.body
         if request.method == 'POST' and form.validate_on_submit():
