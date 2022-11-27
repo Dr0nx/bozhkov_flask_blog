@@ -36,22 +36,34 @@
                                                                      href="{{ url_for('posts.post', post_id=post.id) }}">Читать
                                         далее...</a></small>
                                 </div>
-                                <div class="right_side_post">
+                                <div class="right_side-post">
+
                                     {% if current_user.is_authenticated %}
                                         {{ post.likes.count() }}
                                         {% if current_user.has_liked_post(post) %}
-                                            <a href="{{ url_for('users.like_action', post_id=post.id, action='unlike') }}"><img
-                                                    src="{{ url_for('static', filename='images/like-icon-liked-small.png') }}"
-                                                    alt="heart" width="20px"></a>
+                                            {#<a href="#" class="like_button" id="unlike_{{ post.id }}" data-likes='{{ post.likes.count  }}'>#}
+                                            {#<a class="unlike" id="unlike_{{ post.id }}"#}
+                                            {#  href="{{ url_for('users.like_action', post_id=post.id, action='unlike') }}">#}
+                                            <a href="{{ url_for('users.like_action', post_id=post.id, action='unlike') }}">
+                                                <img class="like"
+                                                     src="{{ url_for('static', filename='images/like-icon-liked-small.png') }}"
+                                                     alt="heart" width="20px">
+                                            </a>
+
                                         {% else %}
-                                            <a href="{{ url_for('users.like_action', post_id=post.id, action='like') }}"><img
-                                                    src="{{ url_for('static', filename='images/like-icon-unliked-small.png') }}"
-                                                    alt="heart" width="20px"></a>
+                                            {#<a href="#" class="like_button" id="like_{{ post.id }}" data-likes='{{ post.likes.count }}'>#}
+                                            {#<a class="like" id="like_{{ post.id }}"#}
+                                            {#  href="{{ url_for('users.like_action', post_id=post.id, action='like') }}">#}
+                                            <a href="{{ url_for('users.like_action', post_id=post.id, action='like') }}">
+                                                <img class="unlike"
+                                                     src="{{ url_for('static', filename='images/like-icon-unliked-small.png') }}"
+                                                     alt="heart" width="20px">
+                                            </a>
+
                                         {% endif %}
                                     {% endif %}
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

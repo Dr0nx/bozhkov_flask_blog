@@ -1,4 +1,5 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+import json
+from flask import render_template, url_for, flash, redirect, jsonify, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required, AnonymousUserMixin
 
 from flask_blog import db, bcrypt
@@ -109,8 +110,8 @@ def reset_token(token):
     return render_template('reset_token.html', title='Сброс пароля', form=form)
 
 
+# @users.route('/like', methods=['POST'])
 @users.route('/like/<int:post_id>/<action>')
-@login_required
 def like_action(post_id, action):
     post = Post.query.filter_by(id=post_id).first_or_404()
     if action == 'like':
@@ -120,6 +121,12 @@ def like_action(post_id, action):
         current_user.unlike_post(post)
         db.session.commit()
     return redirect(request.referrer)
+
+    # return jsonify({
+    #     'post_likes_count': post.likes.count(),
+    #     'post_id': post_id,
+    #     'action': action
+    # })
 
 
 class Anonymous(AnonymousUserMixin):

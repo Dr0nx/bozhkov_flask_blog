@@ -22,10 +22,10 @@
                         <div class="row">
                             <small>Опубликовано {{ post.date_posted.strftime('%A, %d %B %Y %H:%M') }}</small>
                         </div>
-                        {% if not form.picture %}
+                        {% if post.image_post %}
                             <div class="d-flex justify-content-center mt-3 card-img-top">
                                 <img src="{{ url_for('static', filename='images/' + post.author.username + '/' + post.image_post) }}"
-                                     alt="" width="600px">
+                                     alt="">
                             </div>
                             <hr class="mt-4">
                         {% endif %}
@@ -46,21 +46,32 @@
                 <div class="d-flex justify-content-between align-content-around mt-3">
                     <div class="left_side_post"></div>
                     <div class="right_side_post">
-                        {{ post.likes.count() }}
-                        {% if current_user.has_liked_post(post) %}
-                            <a href="{{ url_for('users.like_action', post_id=post.id, action='unlike') }}"><img
-                                    src="{{ url_for('static', filename='images/like-icon-liked-small.png') }}"
-                                    alt="heart" width="20px"></a>
-                        {% else %}
-                            <a href="{{ url_for('users.like_action', post_id=post.id, action='like') }}"><img
-                                    src="{{ url_for('static', filename='images/like-icon-unliked-small.png') }}"
-                                    alt="heart" width="20px"></a>
-                        {% endif %}
+                        <div class="like_buttons{{ post.id }}">
+                            {% if current_user.id and current_user.has_liked_post(post) %}
+                                {#                                <a href="#" class="like_button" id="unlike_{{ post.id }}">#}
+                                {#                                    <img src="{{ url_for('static', filename='images/like-icon-liked-small.png') }}"#}
+                                {#                                         alt="heart" width="20px">#}
+                                {#                                </a>#}
+                                <a href="{{ url_for('users.like_action', post_id=post.id, action='unlike') }}">
+                                    <img class="like"
+                                         src="{{ url_for('static', filename='images/like-icon-liked-small.png') }}"
+                                         alt="heart" width="20px">
+                                </a>
+                            {% else %}
+{#                                <a href="#" class="like_button" id="like_{{ post.id }}">#}
+{#                                    <img src="{{ url_for('static', filename='images/like-icon-unliked-small.png') }}"#}
+{#                                         alt="heart" width="20px">#}
+{#                                </a>#}
+                                <a href="{{ url_for('users.like_action', post_id=post.id, action='like') }}">
+                                    <img class="unlike"
+                                         src="{{ url_for('static', filename='images/like-icon-unliked-small.png') }}"
+                                         alt="heart" width="20px">
+                                </a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-
                 {% include 'inc-comments.html' %}
-
             </div>
         </div>
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"

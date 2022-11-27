@@ -1,25 +1,43 @@
 {% extends "layout.html" %}
 {#{% block menu %}{% include "inc-menu.html" %}{% endblock %}#}
 {% block content %}
-    <main class="mb-5">
-        <h2 class="d-flex justify-content-start mb-4">Божков Андрей Викторович</h2>
-        {% include "inc-flashed-messages.html" %}
-        <p class="card-text" id="para">Добро пожаловать в мой блог!
-            Большое спасибо за посещение. Я рад видеть вас на просторах моего блога! Это так здорово видеть
-            вас здесь. Позвольте мне сказать вам одну вещь: вы можете не только просматривать
-            новые посты, но и получать обновления...</p>
-        <p class="card-text red">
-            Идейные соображения высшего порядка, а также дальнейшее развитие различных форм деятельности позволяет
-            оценить значение систем массового участия. С другой стороны рамки и место обучения кадров влечет за
-            собой процесс внедрения и модернизации новых предложений. Идейные соображения высшего порядка, а также
-            сложившаяся структура организации позволяет оценить значение модели развития. Идейные соображения
-            высшего порядка, а также дальнейшее развитие различных форм деятельности позволяет выполнять важные
-            задания по разработке направлений прогрессивного развития.
-        </p>
-        <p class="card-text">
-            У меня все &#129309;
-        </p>
-        <br>
+    <main>
+        <h2 class="mb-4">Божков Андрей Викторович</h2>
+
+        <div class="d-flex flex-column">
+            <h5>Мужчина, 44 года, родился 12 декабря 1977</h5>
+            <small style="color: #aaaaaa">Краснодар</small>
+        </div>
+
+        <div class="d-flex flex-column">
+            <h5 class="mt-4 mb-2">Контакты</h5>
+            <code class="text-info">Почта:&nbsp;&nbsp;dr0n<span id="dummy">REMOVE</span>x@yandex<span
+                    id="dummy">REMOVE</span>.ru</code>
+            <code class="text-info">Номер:&nbsp;&nbsp;+7 <span id="dummy">REMOVE</span>(903) <span
+                    id="dummy">REMOVE</span>456-<span
+                    id="dummy">REMOVE</span>00-65</code>
+        </div>
+
+        <div class="d-flex flex-column my-2">
+            <code class="text-info">Занятость:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;полная занятость</code>
+            <code class="text-info">График работы:&nbsp;удаленная работа, гибкий график, полный день</code>
+        </div>
+
+        <div class="d-flex flex-column my-4">
+            <h5>Переподготовка на Web-разработчика (Python)</h5>
+            <small style="color: #aaaaaa">(сейчас работаю в
+                <a href="https://yuga.ru" target="_blank">yuga.ru</a> инженером - стаж 24 года,
+                <a href="https://krasnodar.hh.ru/applicant/resumes/view?resume=5fd21a8cff02ab6ded0039ed1f6f5232324137"
+                   target="_blank">hh.ru)</a></small>
+        </div>
+
+        <h5 class="">Портфолио</h5>
+
+        <div class="d-flex mt-4">
+            <div class="w-50">Январь 2021 — по настоящее время</div>
+            <div class=""></div>
+        </div>
+
     </main>
 {% endblock content %}
 {#{% block bottom %}{% include "inc-bottom.html" %}{% endblock %}#}
